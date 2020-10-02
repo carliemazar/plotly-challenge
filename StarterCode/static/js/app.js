@@ -1,4 +1,4 @@
-// add dropdown values to html
+// add dropdown values
 function dropdown() {  
     var dropdown2 = d3.select("#selSubject")
     d3.json("../data/samples.json").then(function(data) {
@@ -7,35 +7,35 @@ function dropdown() {
     dropdown2.append("option").text(element).property("value", element)
    })})}
 
-// create event listener change event   
+// event listener chang  
 d3.selectAll("body").on("change", updatePage);
 
-// when dropdown value is selected, pull the data from json and build bar chart, bubble chart, and demographic display
+// Edit dropdown menu to change the demo info, bar graph, and bubble graph per subject 
 function updatePage() {
   var dropdownMenu = d3.selectAll("#selSubject").node();
   var selectedID = dropdownMenu.value;
   d3.json("../data/samples.json").then((data) => {
 
- // pull and slice data for bar chart   
+ // data for bar chart   
   var subject_IDs = data.samples.map(x => x.id);
   var sample_values = data.samples.map(x => x.sample_values.slice(0,10));
   var otu_ids = data.samples.map(x => x.otu_ids.slice(0,10));
   var otu_labels2 = data.samples.map(x => x.otu_labels.slice(0,10));
   
-  // pull data for bubble chart
+// data for bubble chart
   var bub_sample_values = data.samples.map(x => x.sample_values);
   var bub_otu_ids = data.samples.map(x => x.otu_ids);
   var bub_otu_labels = data.samples.map(x => x.otu_labels);
   
-  // pull data for demographic display
+  // demographic display
   var demodata = data.metadata
   
-  // function to return the index of the subject id selected
+  // function to return the index of belly button subject
   function selectedIndex(x) {
     return x==selectedID;
   }
   
-  // tranformed variables for the bar graph
+  // variables for bar graph 
   var subjectIndex = subject_IDs.findIndex(selectedIndex);
   var y_selected = otu_ids[subjectIndex];
   var ry_selected = y_selected.reverse();
@@ -43,7 +43,7 @@ function updatePage() {
   var ryss_selected = rys_selected.split(',');
   var y2_selected = ryss_selected.map(x => 'OTU ' + x);
   
-// displaying the demographics based on the selected sample id
+// Change what pops up on the demo from which subject is selected
   var demographics = d3.select("#sample-metadata")
   var demoSelected = demodata[subjectIndex]
   console.log("demographics: ", demoSelected)
@@ -91,7 +91,7 @@ function updatePage() {
     })}
 
 
-// initial page shows charts for subject 940    
+// Default shows charts for subject 940    
 function init() {
   
   d3.json("../data/samples.json").then((data) => {
