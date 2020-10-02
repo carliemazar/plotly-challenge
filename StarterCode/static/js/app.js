@@ -71,9 +71,18 @@ function updatePage() {
                   color: bub_otu_ids[subjectIndex]            
         }
       };
+    // Gauge Graph
+    var trace3 = {
+        domain: { x: [0,1], y: [0,1] },
+        value: 9,
+        title: {text: "Belly Button Washing Frequency"},
+        type: "indicator",
+        mode: "gauge+number"
+        }
 
       var chartData1 = [trace1];
       var chartData2 = [trace2];
+      var chartData3 = [trace3];
 
       var layout1 = {
         title: `Top 10 OTUs found in Subject ID: ${selectedID}`, 
@@ -82,8 +91,15 @@ function updatePage() {
         title: `All OTUs Sample Values for Subject ID: ${selectedID}`, 
       };  
 
+      var layout3 = {
+          width: 600, 
+          height: 500, 
+          margin: { t: 0, b: 0}
+      };
+
       Plotly.newPlot("bar", chartData1, layout1);
       Plotly.newPlot("bubble", chartData2, layout2);
+      Plotly.newPlot("gauge", chartData3, layout3);
 
       console.log(subject_IDs);
       console.log(selectedID);
